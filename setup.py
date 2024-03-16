@@ -63,6 +63,23 @@ if "CMAKE_BUILD_PARALLEL_LEVEL" not in os.environ:
 if platform.system() == "Darwin":
     os.environ["OSX_DEPLOYMENT_TARGET"] = os.environ.get("OSX_DEPLOYMENT_TARGET", "10.13")
     os.environ["MACOSX_DEPLOYMENT_TARGET"] = os.environ.get("OSX_DEPLOYMENT_TARGET", "10.13")
+elif platform.system() == "Windows":
+    import distutils.msvccompiler as dm
+    # https://wiki.python.org/moin/WindowsCompilers#Microsoft_Visual_C.2B-.2B-_14.0_with_Visual_Studio_2015_.28x86.2C_x64.2C_ARM.29
+    msvc = {
+        "12": "Visual Studio 12 2013",
+        "14": "Visual Studio 14 2015",
+        "14.0": "Visual Studio 14 2015",
+        "14.1": "Visual Studio 15 2017",
+        "14.2": "Visual Studio 16 2019",
+        "14.3": "Visual Studio 17 2022",
+    }.get(str(dm.get_build_version()), "Visual Studio 15 2017")
+    cmake_args.extend(
+        [
+            "-G",
+            os.environ.get("CSP_GENERATOR", msvc),
+        ]
+    )
 
 if hasattr(platform, "mac_ver") and platform.mac_ver()[0].startswith("14"):
     cmake_args.append("-DCSP_USE_LD_CLASSIC_MAC=ON")
