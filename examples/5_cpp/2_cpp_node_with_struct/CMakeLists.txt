@@ -93,8 +93,14 @@ include_directories(${Python_INCLUDE_DIRS})
 # prefix is _ by default
 set(CMAKE_SHARED_LIBRARY_PREFIX _)
 
-# shared suffix is .so for both linux and mac
-set(CMAKE_SHARED_LIBRARY_SUFFIX .so)
+if(WIN32)
+    # shared suffix is .pyd for windows
+    set(CMAKE_SHARED_LIBRARY_SUFFIX .pyd)
+    add_definitions(-DBOOST_UUID_FORCE_AUTO_LINK)
+else()
+    # shared suffix is .so for both linux and mac
+    set(CMAKE_SHARED_LIBRARY_SUFFIX .so)
+endif()
 
 find_package(CSP REQUIRED)
 message("${Cyan}Found CSP:\n\tincludes in: ${CSP_INCLUDE_DIR}\n\tlibraries in: ${CSP_LIBS_DIR}${ColorReset}")

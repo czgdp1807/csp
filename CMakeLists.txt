@@ -375,6 +375,12 @@ endif()
 # prefix is _ by default
 set(CMAKE_SHARED_LIBRARY_PREFIX _)
 
+if(WIN32)
+    # shared suffix is .pyd for windows
+    set(CMAKE_SHARED_LIBRARY_SUFFIX .pyd)
+    add_definitions(-DBOOST_UUID_FORCE_AUTO_LINK)
+endif()
+
 if(NOT WIN32)
     # shared suffix is .so for both linux and mac
     set(CMAKE_SHARED_LIBRARY_SUFFIX .so)
