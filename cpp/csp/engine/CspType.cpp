@@ -1,5 +1,5 @@
 #include <csp/engine/CspType.h>
-#include <mutex>
+// #include <mutex>
 
 namespace csp
 {
@@ -29,6 +29,7 @@ INIT_CSP_ENUM( CspType::Type,
 
 CspTypePtr & CspArrayType::create( const CspTypePtr & elemType )
 {
+    /*
     using Cache = std::unordered_map<const CspType*,CspTypePtr>;
     static std::mutex s_mutex;
     static Cache      s_cache;
@@ -38,6 +39,8 @@ CspTypePtr & CspArrayType::create( const CspTypePtr & elemType )
     if( rv.second )
         rv.first -> second = std::make_shared<CspArrayType>( elemType );
     return rv.first -> second;
+    */
+    return csp::CspType::BOOL();
 }
 
 }

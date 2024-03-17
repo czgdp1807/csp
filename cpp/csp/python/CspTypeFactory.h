@@ -3,13 +3,13 @@
 
 #include <csp/core/Platform.h>
 #include <csp/engine/CspType.h>
-#include <unordered_map>
+// #include <unordered_map>
 #include <Python.h>
 
 namespace csp::python
 {
 
-class DLL_PUBLIC CspTypeFactory
+class CspTypeFactory
 {
 public:
     static CspTypeFactory & instance();
@@ -18,8 +18,8 @@ public:
     void removeCachedType( PyTypeObject * );
 
 private:
-    using Cache = std::unordered_map<PyTypeObject *, CspTypePtr>;
-    Cache m_cache;
+    // using Cache = std::unordered_map<PyTypeObject *, CspTypePtr>;
+    // Cache m_cache;
 };
 
 }

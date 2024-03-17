@@ -11,8 +11,9 @@ namespace csp::python
 {
 
 //This is the base class of csp.Enum
-struct DLL_PUBLIC PyCspEnumMeta : public PyHeapTypeObject
+struct PyCspEnumMeta : public PyHeapTypeObject
 {
+    PyObject_HEAD
     //convert to PyObject ( new ref )
     PyObject * toPyEnum( CspEnum e ) const;
 
@@ -40,15 +41,16 @@ public:
 
     const PyTypeObjectPtr & pyType() const { return m_pyType; }
 
-    const PyCspEnumMeta * pyMeta() const   { return ( const PyCspEnumMeta * ) m_pyType.get(); }
+    const PyCspEnumMeta * pyMeta() const   { /* return ( const PyCspEnumMeta * ) m_pyType.get(); */ return NULL; }
 
 private:
 
     PyTypeObjectPtr m_pyType;
 };
 
-struct DLL_PUBLIC PyCspEnum : public PyObject
+struct PyCspEnum : public PyObject
 {
+    PyObject_HEAD
     PyCspEnum( const CspEnum & e ) : enum_( e ) {}
     ~PyCspEnum() {}
 
@@ -56,8 +58,8 @@ struct DLL_PUBLIC PyCspEnum : public PyObject
     PyObjectPtr enumName;
     PyObjectPtr enumValue;
 
-    PyCspEnumMeta * pyMeta() { return ( PyCspEnumMeta * ) ob_type; };
-    const DialectCspEnumMeta * meta() { return static_cast<const DialectCspEnumMeta*>( pyMeta() -> enumMeta.get() ); }
+    PyCspEnumMeta * pyMeta() { /* return ( PyCspEnumMeta * ) ob_type; */ return NULL; };
+    const DialectCspEnumMeta * meta() { /* return static_cast<const DialectCspEnumMeta*>( pyMeta() -> enumMeta.get() ); */ return NULL; }
 
     static PyTypeObject PyType;
 };

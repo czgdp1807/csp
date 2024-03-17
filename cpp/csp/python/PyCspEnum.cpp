@@ -14,12 +14,14 @@ DialectCspEnumMeta::DialectCspEnumMeta( PyTypeObjectPtr pyType, const std::strin
 {
 }
 
+
 /*
 MetaClass Madness NOTES!!! -- see PyStruct.cpp for note, same idea
 */
 
 static PyObject * PyCspEnumMeta_new( PyTypeObject *subtype, PyObject *args, PyObject *kwds )
 {
+    /*
     CSP_BEGIN_METHOD;
 
     PyObject * pyname;
@@ -99,6 +101,8 @@ static PyObject * PyCspEnumMeta_new( PyTypeObject *subtype, PyObject *args, PyOb
 
     return ( PyObject * ) pymeta;
     CSP_RETURN_NULL;
+    */
+    return NULL;
 }
 
 PyObject * PyCspEnumMeta::toPyEnum( CspEnum e ) const
@@ -114,13 +118,16 @@ PyObject * PyCspEnumMeta::toPyEnum( CspEnum e ) const
 
 void PyCspEnumMeta_dealloc( PyCspEnumMeta * m )
 {
+    /*
     CspTypeFactory::instance().removeCachedType( reinterpret_cast<PyTypeObject*>( m ) );
     m -> ~PyCspEnumMeta();
     Py_TYPE( m ) -> tp_free( m );
+    */
 }
 
 PyObject * PyCspEnumMeta_subscript( PyCspEnumMeta * self, PyObject * key )
 {
+    /*
     CSP_BEGIN_METHOD;
    
     PyObject * obj = PyDict_GetItem( self -> enumsByName.get(), key );
@@ -131,20 +138,22 @@ PyObject * PyCspEnumMeta_subscript( PyCspEnumMeta * self, PyObject * key )
     Py_INCREF( obj );
     return obj;
     CSP_RETURN_NULL;
+    */
+    return NULL;
 }
 
 
-static PyMappingMethods PyCspEnumMeta_MappingMethods = {
-    0,                               /*mp_length */
-    (binaryfunc) PyCspEnumMeta_subscript, /*mp_subscript */
-};
+// static PyMappingMethods PyCspEnumMeta_MappingMethods = {
+//     0,                               /*mp_length */
+//     (binaryfunc) PyCspEnumMeta_subscript, /*mp_subscript */
+// };
 
-PyTypeObject PyCspEnumMeta::PyType = {
+static PyTypeObject PyCspEnumMeta_PyType = {
     PyVarObject_HEAD_INIT(nullptr, 0)
     "_cspimpl.PyCspEnumMeta",  /* tp_name */
     sizeof(PyCspEnumMeta),     /* tp_basicsize */
     0,                         /* tp_itemsize */
-    (destructor) PyCspEnumMeta_dealloc, /* tp_dealloc */
+    0, // (destructor) PyCspEnumMeta_dealloc, /* tp_dealloc */
     0,                         /* tp_print */
     0,                         /* tp_getattr */
     0,                         /* tp_setattr */
@@ -152,15 +161,15 @@ PyTypeObject PyCspEnumMeta::PyType = {
     0,                         /* tp_repr */
     0,                         /* tp_as_number */
     0,                         /* tp_as_sequence */
-    &PyCspEnumMeta_MappingMethods, /* tp_as_mapping */
+    0, // &PyCspEnumMeta_MappingMethods, /* tp_as_mapping */
     0,                         /* tp_hash  */
     0,                         /* tp_call */
     0,                         /* tp_str */
     0,                         /* tp_getattro */
     0,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT |
-    Py_TPFLAGS_BASETYPE | Py_TPFLAGS_TYPE_SUBCLASS, /* tp_flags */
+    Py_TPFLAGS_DEFAULT, // |
+    // Py_TPFLAGS_BASETYPE | Py_TPFLAGS_TYPE_SUBCLASS, /* tp_flags */
     "csp enum metaclass",      /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
@@ -171,27 +180,30 @@ PyTypeObject PyCspEnumMeta::PyType = {
     0,                         /* tp_methods */
     0,                         /* tp_members */
     0,                         /* tp_getset */
-    &PyType_Type,              /* tp_base */
+    0, // &PyType_Type,              /* tp_base */
     0,                         /* tp_dict */
     0,                         /* tp_descr_get */
     0,                         /* tp_descr_set */
     0,                         /* tp_dictoffset */
     0,                         /*tp_init*/
     0,                         /* tp_alloc */
-    (newfunc) PyCspEnumMeta_new,/* tp_new */
-    PyObject_GC_Del,           /* tp_free */
+    0, // (newfunc) PyCspEnumMeta_new,/* tp_new */
+    0, // PyObject_GC_Del,           /* tp_free */
 };
 
 
 //PyCspEnum
 void PyCspEnum_dealloc( PyCspEnum * self )
 {
+    /*
     self -> ~PyCspEnum();
     Py_TYPE( self ) -> tp_free( self );
+    /*/
 }
 
 PyObject * PyCspEnum_new( PyTypeObject * type, PyObject *args, PyObject *kwds )
 {
+    /*
     CSP_BEGIN_METHOD;
 
     PyObject * pyvalue;
@@ -211,32 +223,42 @@ PyObject * PyCspEnum_new( PyTypeObject * type, PyObject *args, PyObject *kwds )
     Py_INCREF( obj );
     return obj;
     CSP_RETURN_NULL;
+    */
+    return NULL;
 }
 
 PyObject * PyCspEnum_name( PyCspEnum * self, void * )
 {
+    /*
     Py_INCREF( self -> enumName.get() );
     return self -> enumName.get();
+    */
+    return NULL;
 }
 
 PyObject * PyCspEnum_value( PyCspEnum * self, void * )
 {
+    /*
     Py_INCREF( self -> enumValue.get() );
     return self -> enumValue.get();
+    */
+    return NULL;
 }
 
+/*
 static PyGetSetDef PyCspEnum_getset[] = {
     { ( char * ) "name",  (getter) PyCspEnum_name,  0, ( char * ) "string name of the enum instance", 0 },
     { ( char * ) "value", (getter) PyCspEnum_value, 0, ( char * ) "long value of the enum instance", 0 },
     { NULL }
 };
+*/
 
-PyTypeObject PyCspEnum::PyType = {
+static PyTypeObject PyCspEnum_PyType = {
     PyVarObject_HEAD_INIT(nullptr, 0)
     "_cspimpl.PyCspEnum",      /* tp_name */
     sizeof(PyCspEnum),         /* tp_basicsize */
     0,                         /* tp_itemsize */
-    (destructor) PyCspEnum_dealloc, /* tp_dealloc */
+    0, // (destructor) PyCspEnum_dealloc, /* tp_dealloc */
     0,                         /* tp_print */
     0,                         /* tp_getattr */
     0,                         /* tp_setattr */
@@ -251,8 +273,8 @@ PyTypeObject PyCspEnum::PyType = {
     0,                         /* tp_getattro */
     0,                         /* tp_setattro */
     0,                         /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT |
-       Py_TPFLAGS_BASETYPE,    /* tp_flags */
+    Py_TPFLAGS_DEFAULT, // |
+    //   Py_TPFLAGS_BASETYPE,    /* tp_flags */
     "csp enum",                /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
@@ -262,7 +284,7 @@ PyTypeObject PyCspEnum::PyType = {
     0,                         /* tp_iternext */
     0,                         /* tp_methods */
     0,                         /* tp_members */
-    PyCspEnum_getset,          /* tp_getset */
+    0, // PyCspEnum_getset,          /* tp_getset */
     0,                         /* tp_base */
     0,                         /* tp_dict */
     0,                         /* tp_descr_get */
@@ -270,11 +292,11 @@ PyTypeObject PyCspEnum::PyType = {
     0,                         /* tp_dictoffset */
     0,                         /* tp_init */
     0,                         /* tp_alloc */
-    (newfunc) PyCspEnum_new,   /* tp_new */
+    0, // (newfunc) PyCspEnum_new,   /* tp_new */
     0,                         /* tp_free */
 };
 
-REGISTER_TYPE_INIT( &PyCspEnumMeta::PyType, "PyCspEnumMeta" )
-REGISTER_TYPE_INIT( &PyCspEnum::PyType,     "PyCspEnum" )
+// REGISTER_TYPE_INIT( &PyCspEnumMeta::PyType, "PyCspEnumMeta" )
+// REGISTER_TYPE_INIT( &PyCspEnum::PyType,     "PyCspEnum" )
 
 }

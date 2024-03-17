@@ -544,7 +544,7 @@ inline DateTime DateTime::now()
 {
     timespec ts;
 #ifdef WIN32
-    timespec_get(&ts, TIME_UTC);
+   // timespec_get(&ts, TIME_UTC);
 #else
     clock_gettime( CLOCK_REALTIME, &ts );
 #endif

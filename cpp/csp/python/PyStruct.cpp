@@ -938,7 +938,7 @@ PyTypeObject PyStruct::PyType = {
     PyObject_GC_Del,           /* tp_free */
 };
 
-REGISTER_TYPE_INIT( &PyStructMeta::PyType, "PyStructMeta" )
-REGISTER_TYPE_INIT( &PyStruct::PyType,     "PyStruct" )
+// REGISTER_TYPE_INIT( &PyStructMeta::PyType, "PyStructMeta" )
+// REGISTER_TYPE_INIT( &PyStruct::PyType,     "PyStruct" )
 
 }

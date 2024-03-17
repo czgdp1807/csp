@@ -8,7 +8,7 @@
 namespace csp
 {
 
-struct DLL_PUBLIC DialectGenericType
+struct DialectGenericType
 {
 public:
     DialectGenericType();

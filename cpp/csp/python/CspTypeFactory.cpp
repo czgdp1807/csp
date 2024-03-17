@@ -1,4 +1,4 @@
-#include <csp/python/Conversions.h>
+// #include <csp/python/Conversions.h>
 #include <csp/python/CspTypeFactory.h>
 #include <csp/python/PyStruct.h>
 #include <datetime.h>
@@ -14,6 +14,7 @@ CspTypeFactory & CspTypeFactory::instance()
 
 CspTypePtr & CspTypeFactory::typeFromPyType( PyObject * pyTypeObj )
 {
+/*
     // List objects shouldn't be cached since they are temporary objects
     if( PyList_Check( pyTypeObj ) )
     {
@@ -68,11 +69,13 @@ CspTypePtr & CspTypeFactory::typeFromPyType( PyObject * pyTypeObj )
     }
 
     return rv.first -> second;
+*/
+    return csp::CspType::BOOL();
 }
  
 void CspTypeFactory::removeCachedType( PyTypeObject * pyType )
 {
-    m_cache.erase( pyType );
+    // m_cache.erase( pyType );
 }
 
 }

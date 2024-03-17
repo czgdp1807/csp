@@ -1,22 +1,22 @@
 #ifndef _IN_CSP_PYTHON_CONVERSIONS_H
 #define _IN_CSP_PYTHON_CONVERSIONS_H
 
-#include <csp/core/Platform.h>
-#include <csp/core/Time.h>
+// #include <csp/core/Platform.h>
+// #include <csp/core/Time.h>
 #include <csp/engine/Dictionary.h>
-#include <csp/engine/PartialSwitchCspType.h>
-#include <csp/engine/Struct.h>
+// #include <csp/engine/PartialSwitchCspType.h>
+// #include <csp/engine/Struct.h>
 #include <csp/engine/TimeSeriesProvider.h>
 #include <csp/python/CspTypeFactory.h>
-#include <csp/python/Exception.h>
+// #include <csp/python/Exception.h>
 #include <csp/python/PyCspEnum.h>
 #include <csp/python/PyCspType.h>
-#include <csp/python/PyObjectPtr.h>
+// #include <csp/python/PyObjectPtr.h>
 #include <csp/python/PyStruct.h>
 #include <datetime.h>
 #include <Python.h>
 #include <string>
-#include <variant>
+// #include <variant>
 
 namespace csp::python
 {
@@ -32,8 +32,8 @@ struct DateTimeOrTimeDelta : public std::variant<DateTime,TimeDelta>
     using BaseT = std::variant<DateTime,TimeDelta>;
     using BaseT::BaseT;
 
-    bool isDateTime() const  { return std::holds_alternative<DateTime>( *this ); }
-    bool isTimeDelta() const { return std::holds_alternative<TimeDelta>( *this ); }
+    bool isDateTime() const  { /* return std::holds_alternative<DateTime>( *this ); */ return true; }
+    bool isTimeDelta() const { /* return std::holds_alternative<TimeDelta>( *this ); */  return true; }
 
     DateTime  datetime() const  { return std::get<DateTime>( *this ); }
     TimeDelta timedelta() const { return std::get<TimeDelta>( *this ); }
@@ -47,6 +47,7 @@ inline csp::CspTypePtr & pyTypeAsCspType( PyObject * pyType )
 //for exception formatting
 inline std::string pyTypeToString( PyObject * pyType )
 {
+    /*
     if( PyType_Check( pyType ) )
         return ( ( PyTypeObject * ) pyType ) -> tp_name;
     else if( PyList_Check( pyType ) )
@@ -57,6 +58,8 @@ inline std::string pyTypeToString( PyObject * pyType )
     }
     else
         return "<unknown>";
+    */
+   return "<unknown>";
 }
 
 template< typename F>
@@ -67,16 +70,19 @@ inline auto switchPyType( PyObject * pyType, F && f )
 
 inline bool validatePyType( const CspType * type, PyObject *pyType, PyObject * value )
 {
+    /*
     //helper method to ensure that dialect generic types pushed from user circuits are aligned with expected types
     //we only check dialect generic because other well known types will fail in fromPython conversion code
     return type -> type() != CspType::Type::DIALECT_GENERIC ||
         PyType_IsSubtype( Py_TYPE( value ), ( PyTypeObject * ) pyType );
+    */
+   return true;
 }
 
 template<typename T>
 inline T fromPython( PyObject * o )
 {
-    static_assert( !std::is_same<T,T>::value, "no fromPython method implemented for type" );
+    // static_assert( !std::is_same<T,T>::value, "no fromPython method implemented for type" );
     return T{};
 }
 
@@ -110,14 +116,18 @@ PyObject * toPython( const T & value )
 template<typename T>
 inline PyObject * toPython( const T & value, const CspType & type )
 {
-    return toPython<T>( value );
+    // return toPython<T>( value );
+    return NULL;
 }
 
 inline PyObject * toPythonCheck( PyObject * res )
 {
+    /*
     if( !res )
         CSP_THROW( PythonPassthrough, "" );
     return res;
+    */
+   return NULL;
 }
 
 //PyObjectPtr
@@ -130,9 +140,12 @@ inline PyObjectPtr fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const PyObjectPtr & value )
 {
+    /*
     PyObject * rv = value.ptr();
     Py_XINCREF( rv );
     return rv;
+    */
+   return NULL;
 }
 
 template<>
@@ -143,20 +156,25 @@ inline DialectGenericType fromPython( PyObject * o )
 
 inline PyObject * toPythonBorrowed( const DialectGenericType & value)
 {
-    return reinterpret_cast<const PyObjectPtr &>(value).ptr();
+    // return reinterpret_cast<const PyObjectPtr &>(value).ptr();
+    return NULL;
 }
 
 template<>
 inline PyObject * toPython( const DialectGenericType & value)
 {
-    return toPython( reinterpret_cast<const PyObjectPtr &>(value));
+   // return toPython( reinterpret_cast<const PyObjectPtr &>(value));
+   return NULL;
 }
 
 template<>
 inline PyObject * toPython( PyObject* const& value )
 {
+    /*
     Py_XINCREF( value );
     return value;
+    */
+   return NULL;
 }
 
 //bool
@@ -172,9 +190,12 @@ inline bool fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const bool & value )
 {
+    /*
     auto * rv = value ? Py_True : Py_False;
     Py_INCREF( rv );
     return rv;
+    */
+    return NULL;
 }
 
 
@@ -202,14 +223,16 @@ inline double fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const double & value )
 {
-    return toPythonCheck( PyFloat_FromDouble( value ) );
+    // return toPythonCheck( PyFloat_FromDouble( value ) );
+    return NULL;
 }
 
 //int64_t
 template<>
 inline PyObject * toPython( const int64_t & value )
 {
-    return toPythonCheck( PyLong_FromLong( value ) );
+    // return toPythonCheck( PyLong_FromLong( value ) );
+    return NULL;
 }
 
 template<>
@@ -229,7 +252,8 @@ inline int64_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const uint64_t & value )
 {
-    return toPythonCheck( PyLong_FromUnsignedLong( value ) );
+    // return toPythonCheck( PyLong_FromUnsignedLong( value ) );
+    return NULL;
 }
 
 template<>
@@ -249,7 +273,8 @@ inline uint64_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const int32_t & value )
 {
-    return toPython<int64_t>( value );
+    // return toPython<int64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -266,7 +291,8 @@ inline int32_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const uint32_t & value )
 {
-    return toPython<uint64_t>( value );
+    // return toPython<uint64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -282,7 +308,8 @@ inline uint32_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const int16_t & value )
 {
-    return toPython<int64_t>( value );
+    // return toPython<int64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -299,7 +326,8 @@ inline int16_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const uint16_t & value )
 {
-    return toPython<uint64_t>( value );
+    // return toPython<uint64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -315,7 +343,8 @@ inline uint16_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const int8_t & value )
 {
-    return toPython<int64_t>( value );
+    // return toPython<int64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -332,7 +361,8 @@ inline int8_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const uint8_t & value )
 {
-    return toPython<uint64_t>( value );
+    // return toPython<uint64_t>( value );
+    return NULL;
 }
 
 template<>
@@ -348,12 +378,14 @@ inline uint8_t fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const csp::CspType::StringCType & value )
 {
-    return toPythonCheck( PyUnicode_FromStringAndSize( value.c_str(), value.size() ) );
+    // return toPythonCheck( PyUnicode_FromStringAndSize( value.c_str(), value.size() ) );
+    return NULL;
 }
 
 template<>
 inline PyObject * toPython( const csp::CspType::StringCType & value, const CspType & type )
 {
+    /*
     assert( type.type() == CspType::Type::STRING );
     const CspStringType& strType = static_cast<const CspStringType&>(type);
     if(strType.isBytes())
@@ -364,6 +396,8 @@ inline PyObject * toPython( const csp::CspType::StringCType & value, const CspTy
     {
         return toPython(value);
     }
+    */
+   return NULL;
 }
 
 
@@ -398,6 +432,7 @@ inline csp::CspType::StringCType fromPython( PyObject * o )
 template<>
 inline PyObject * toPython( const StructPtr & s )
 {
+    /*
     if( s -> dialectPtr() )
     {
         PyObject * pystruct = reinterpret_cast<PyObject*>( s -> dialectPtr() );
@@ -412,11 +447,14 @@ inline PyObject * toPython( const StructPtr & s )
     //assign dialectptr, but we DO NOT incref the instance on the struct
     const_cast<StructPtr &>( s ) -> setDialectPtr( pystruct );
     return toPythonCheck( pystruct );
+    */
+   return NULL;
 }
 
 template<>
 inline StructPtr fromPython( PyObject * o, const CspType & type )
 {
+    /*
     assert( type.type() == CspType::Type::STRUCT );
 
     if( !PyType_IsSubtype( Py_TYPE( o ), &PyStruct::PyType ) ||
@@ -430,6 +468,7 @@ inline StructPtr fromPython( PyObject * o, const CspType & type )
             name = " " + meta -> name();
         CSP_THROW( TypeError, "Invalid struct type, expected struct" << name << " got " << Py_TYPE( o ) -> tp_name );
     }
+    */
 
     return static_cast<PyStruct *>( o ) -> struct_;
 }
@@ -438,6 +477,7 @@ inline StructPtr fromPython( PyObject * o, const CspType & type )
 template<>
 inline PyObject * toPython( const CspEnum & e, const CspType & type )
 {
+    /*
     assert( type.type() == CspType::Type::ENUM );
 
     auto & enumType = static_cast<const CspEnumType&>( type );
@@ -447,6 +487,8 @@ inline PyObject * toPython( const CspEnum & e, const CspType & type )
     if( unlikely( !obj ) )
         CSP_THROW( ValueError, e.value() << " is not a valid value on csp.enum type " << emeta -> name() );
     return obj;
+    */
+   return NULL;
 }
 
 template<>
@@ -625,10 +667,13 @@ inline Dictionary::Value fromPython( PyObject * o );
 template<>
 inline Dictionary fromPython( PyObject * o )
 {
+    /*
     if( !PyDict_Check( o ) )
         CSP_THROW( TypeError, "Dictionary conversion expected type dict got " << Py_TYPE( o ) -> tp_name );
+    */
 
     Dictionary out;
+    /*
     PyObject *key, *value;
     Py_ssize_t pos = 0;
 
@@ -641,6 +686,7 @@ inline Dictionary fromPython( PyObject * o )
         auto v = fromPython<csp::Dictionary::Value>( value );
         out.insert( keystr, std::move( v ) );
     }
+    */
 
     return out;
 }
@@ -648,17 +694,21 @@ inline Dictionary fromPython( PyObject * o )
 template<>
 inline std::vector<Dictionary::Data> fromPython( PyObject * o )
 {
+    /*
     if( !PyList_Check( o ) )
         CSP_THROW( TypeError, "Dictionary conversion expected type list got " << Py_TYPE( o ) -> tp_name );
+    */
 
     std::vector<Dictionary::Data> out;
 
+    /*
     Py_ssize_t size = PyList_GET_SIZE( o );
     for( Py_ssize_t i = 0; i < size; ++i )
     {
         PyObject * item = PyList_GET_ITEM( o, i );
         out.emplace_back( fromPython<Dictionary::Value>( item ) );
     }
+    */
 
     return out;
 }
@@ -666,6 +716,7 @@ inline std::vector<Dictionary::Data> fromPython( PyObject * o )
 template<>
 inline Dictionary::Value fromPython( PyObject * o )
 {
+    /*
     if( PyBool_Check( o ) )
         return fromPython<bool>( o );
     else if( PyLong_Check( o ) )
@@ -688,6 +739,8 @@ inline Dictionary::Value fromPython( PyObject * o )
         return ( ( PyStructMeta * ) o ) -> structMeta;
     else
         return fromPython<DialectGenericType>( o );
+    */
+    return fromPython<int64_t>( o );
 }
 
 
@@ -700,16 +753,20 @@ PyObject * toPython( const Dictionary::Value & value );
 template<>
 inline PyObject * toPython( const Dictionary::Vector & v )
 {
+    /*
     PyObject * pylist = PyList_New( v.size() );
     for( size_t i = 0; i < v.size(); i++ )
         PyList_SET_ITEM( pylist, i, toPython( v[i]._data ) );
 
     return pylist;
+    */
+   return NULL;
 }
 
 template<typename T>
 inline PyObject * toPython( const std::vector<T> & v, const CspType & type )
 {
+    /*
     assert( type.type() == CspType::Type::ARRAY );
 
     const CspType & elemType = *static_cast<const CspArrayType &>( type ).elemType();
@@ -719,11 +776,14 @@ inline PyObject * toPython( const std::vector<T> & v, const CspType & type )
     for( size_t idx = 0; idx < size; ++idx )
         PyList_SET_ITEM( list.ptr(), idx, toPython<T>( v[idx], elemType ) );
     return list.release();
+    */
+   return NULL;
 }
 
 template<>
 inline PyObject * toPython( const Dictionary::Value & value )
 {
+    /*
     switch( static_cast<int64_t>( value.index() ) )
     {
         case Dictionary::DictDataType::MONOSTATE:          CSP_THROW( ValueError, "Monostate value is not convertible to a Python type");
@@ -744,11 +804,14 @@ inline PyObject * toPython( const Dictionary::Value & value )
     }
 
     CSP_THROW( ValueError, "Given dictionary value is not a valid value type." );
+    */
+   return NULL;
 }
 
 template<>
 inline PyObject * toPython( const DictionaryPtr & value)
 {
+    /*
     // Convert csp::Dictionary object to Python dictionary
 
     PyObject* pydict = PyDict_New();
@@ -758,6 +821,8 @@ inline PyObject * toPython( const DictionaryPtr & value)
         PyDict_SetItemString( pydict, it.key().c_str(), PyObjectPtr::own( val ).get() );
     }
     return pydict;
+    */
+   return NULL;
 }
 
 template<typename T>
@@ -815,7 +880,7 @@ PyObject * valueAtIndexToPython( const csp::TimeSeriesProvider * ts, int32_t ind
 
 static bool _initPyDateTimeAPI()
 {
-    PyDateTime_IMPORT;
+    // PyDateTime_IMPORT;
     return true;
 }
 

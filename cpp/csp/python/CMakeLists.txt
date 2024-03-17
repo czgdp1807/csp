@@ -2,15 +2,15 @@
 set(CSPTYPESIMPL_PUBLIC_HEADERS
         CspTypeFactory.h
         PyCspEnum.h
-        PyCspType.h
-        PyStruct.h)
+        PyCspType.h)
+        # PyStruct.h)
 
 add_library(csptypesimpl
             csptypesimpl.cpp
             CspTypeFactory.cpp
             PyCspEnum.cpp
-            PyCspType.cpp
-            PyStruct.cpp)
+            PyCspType.cpp)
+            # PyStruct.cpp)
 set_target_properties(csptypesimpl PROPERTIES PUBLIC_HEADER "${CSPTYPESIMPL_PUBLIC_HEADERS}")
 target_link_libraries(csptypesimpl csp_core csp_types)
 

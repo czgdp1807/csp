@@ -54,11 +54,13 @@ inline InitHelper & InitHelper::instance()
 inline InitHelper::InitCallback InitHelper::typeInitCallback( PyTypeObject * pyType, std::string name )
 {
     InitCallback cb = [pyType,name]( PyObject * module ) {
+        /*
         if( PyType_Ready( pyType ) < 0 )
             return false;
 
         Py_INCREF( pyType );
         PyModule_AddObject( module, name.c_str(), ( PyObject  * ) pyType );
+        */
         return true;
     };
 
@@ -68,8 +70,10 @@ inline InitHelper::InitCallback InitHelper::typeInitCallback( PyTypeObject * pyT
 inline InitHelper::InitCallback InitHelper::moduleMethodsCallback( PyMethodDef * methods )
 {
     InitCallback cb = [methods]( PyObject * module ) {
+        /*
         if( PyModule_AddFunctions( module, methods ) < 0 )
             return false;
+        */
         return true;
     };
 
@@ -83,8 +87,10 @@ inline InitHelper::InitCallback InitHelper::moduleMethod( const char * name, PyC
     //Note that we rely on the lambda closure to keep the lifetime of defs which is kept by ptr
     //m_callbacks will keep the InitCallback around for the life of the program
     InitCallback cb = [defs]( PyObject * module ) {
+        /*
         if( PyModule_AddFunctions( module, ( PyMethodDef * ) defs ) < 0 )
             return false;
+        */
         return true;
     };
 
@@ -99,11 +105,13 @@ inline bool InitHelper::registerCallback( InitCallback cb )
 
 inline bool InitHelper::execute( PyObject * module )
 {
+    /*
     for( auto & cb : m_callbacks )
     {
         if( !cb( module ) )
             return false;
     }
+    */
 
     return true;
 }
