@@ -14,6 +14,7 @@ CspTypeFactory & CspTypeFactory::instance()
 
 CspTypePtr & CspTypeFactory::typeFromPyType( PyObject * pyTypeObj )
 {
+    _lazyInitPyDateTimeAPI();
     // List objects shouldn't be cached since they are temporary objects
     if( PyList_Check( pyTypeObj ) )
     {
