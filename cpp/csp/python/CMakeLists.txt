@@ -36,7 +36,10 @@ set(CSPIMPL_PUBLIC_HEADERS
         PyObjectPtr.h
         PyOutputAdapterWrapper.h
         PyOutputProxy.h
-        PyConstants.h)
+        PyConstants.h
+        PyStruct.h
+        PyCspEnum.h
+        PyCspType.h)
 
 add_library(cspimpl SHARED
         cspimpl.cpp
@@ -67,6 +70,9 @@ add_library(cspimpl SHARED
         PyManagedSimInputAdapter.cpp
         PyTimerAdapter.cpp
         PyConstants.cpp
+        PyStruct.cpp
+        PyCspEnum.cpp
+        PyCspType.cpp
         ${CSPIMPL_PUBLIC_HEADERS})
 
 set_target_properties(cspimpl PROPERTIES PUBLIC_HEADER "${CSPIMPL_PUBLIC_HEADERS}")
