@@ -101,7 +101,7 @@ static PyObject * PyCspEnumMeta_new( PyTypeObject *subtype, PyObject *args, PyOb
     CSP_RETURN_NULL;
 }
 
-PyObject * PyCspEnumMeta::toPyEnum( CspEnum e ) const
+DLL_PUBLIC PyObject * PyCspEnumMeta::toPyEnum( CspEnum e ) const
 {
     auto it = enumsByCValue.find( e.value() );
     if( it == enumsByCValue.end() )
@@ -112,14 +112,14 @@ PyObject * PyCspEnumMeta::toPyEnum( CspEnum e ) const
     return rv;
 }
 
-void PyCspEnumMeta_dealloc( PyCspEnumMeta * m )
+DLL_PUBLIC void PyCspEnumMeta_dealloc( PyCspEnumMeta * m )
 {
     CspTypeFactory::instance().removeCachedType( reinterpret_cast<PyTypeObject*>( m ) );
     m -> ~PyCspEnumMeta();
     Py_TYPE( m ) -> tp_free( m );
 }
 
-PyObject * PyCspEnumMeta_subscript( PyCspEnumMeta * self, PyObject * key )
+DLL_PUBLIC PyObject * PyCspEnumMeta_subscript( PyCspEnumMeta * self, PyObject * key )
 {
     CSP_BEGIN_METHOD;
    
@@ -184,13 +184,13 @@ PyTypeObject PyCspEnumMeta::PyType = {
 
 
 //PyCspEnum
-void PyCspEnum_dealloc( PyCspEnum * self )
+DLL_PUBLIC void PyCspEnum_dealloc( PyCspEnum * self )
 {
     self -> ~PyCspEnum();
     Py_TYPE( self ) -> tp_free( self );
 }
 
-PyObject * PyCspEnum_new( PyTypeObject * type, PyObject *args, PyObject *kwds )
+DLL_PUBLIC PyObject * PyCspEnum_new( PyTypeObject * type, PyObject *args, PyObject *kwds )
 {
     CSP_BEGIN_METHOD;
 
@@ -213,13 +213,13 @@ PyObject * PyCspEnum_new( PyTypeObject * type, PyObject *args, PyObject *kwds )
     CSP_RETURN_NULL;
 }
 
-PyObject * PyCspEnum_name( PyCspEnum * self, void * )
+DLL_PUBLIC PyObject * PyCspEnum_name( PyCspEnum * self, void * )
 {
     Py_INCREF( self -> enumName.get() );
     return self -> enumName.get();
 }
 
-PyObject * PyCspEnum_value( PyCspEnum * self, void * )
+DLL_PUBLIC PyObject * PyCspEnum_value( PyCspEnum * self, void * )
 {
     Py_INCREF( self -> enumValue.get() );
     return self -> enumValue.get();

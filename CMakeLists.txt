@@ -179,7 +179,9 @@ endif()
 # Flags #
 #########
 # Compiler version flags
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif()
 

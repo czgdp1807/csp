@@ -36,7 +36,7 @@ namespace std
 {
 
 template<>
-struct hash<csp::DialectGenericType>
+struct DLL_PUBLIC hash<csp::DialectGenericType>
 {
     size_t operator()( const csp::DialectGenericType & obj ) const
     {

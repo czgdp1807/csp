@@ -31,7 +31,7 @@ struct DLL_PUBLIC PyCspEnumMeta : public PyHeapTypeObject
 
 //This is an extension of csp::CspEnumMeta for python dialect, we need it in order to 
 //keep a reference to the python enum type from conversion to/from csp::CspEnumMeta <-> PyObject properly
-class DialectCspEnumMeta : public CspEnumMeta
+class DLL_PUBLIC DialectCspEnumMeta : public CspEnumMeta
 {
 public:
     DialectCspEnumMeta( PyTypeObjectPtr pyType, const std::string & name, 
