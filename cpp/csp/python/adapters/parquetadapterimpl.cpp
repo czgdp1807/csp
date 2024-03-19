@@ -449,9 +449,10 @@ inline DialectGenericListReaderInterface::Ptr create_numpy_array_reader_impl( co
                 csp::CspType::Type::BOOL, csp::CspType::Type::STRING>::invoke( type.get(),
                                                                                []( auto tag ) -> DialectGenericListReaderInterface::Ptr
                                                                                {
-                                                                                   using CValueType = typename decltype(tag)::type;
+                                                                                   // Doesn't seem to work on Windows, gives parser error
+                                                                                   // using CValueType = typename decltype(tag)::type;
                                                                                    auto numpy_dtype = PyArray_DescrFromType(
-                                                                                           csp::python::NPY_TYPE<CValueType>::value );
+                                                                                           csp::python::NPY_TYPE<decltype(tag)::type>::value );
 
                                                                                    if( numpy_dtype -> type_num == NPY_UNICODE )
                                                                                    {
@@ -460,7 +461,7 @@ inline DialectGenericListReaderInterface::Ptr create_numpy_array_reader_impl( co
                                                                                    }
                                                                                    else
                                                                                    {
-                                                                                       return std::make_shared<NumpyArrayReaderImpl<CValueType>>(
+                                                                                       return std::make_shared<NumpyArrayReaderImpl<decltype(tag)::type>>(
                                                                                                numpy_dtype );
                                                                                    }
                                                                                }

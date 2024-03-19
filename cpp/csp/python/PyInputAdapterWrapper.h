@@ -13,7 +13,7 @@ namespace csp::python
 
 class PyEngine;
 
-class PyInputAdapterWrapper : public PyObject
+class CSP_IMPL_EXPORT PyInputAdapterWrapper : public PyObject
 {
 public:
     PyInputAdapterWrapper( InputAdapter * adapter ) : m_adapter( adapter )

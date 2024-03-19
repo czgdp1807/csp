@@ -8,7 +8,7 @@
 namespace csp
 {
 
-struct DLL_PUBLIC DialectGenericType
+struct CSP_TYPES_EXPORT DialectGenericType
 {
 public:
     DialectGenericType();
@@ -28,7 +28,7 @@ private:
     void* m_data;
 };
 
-std::ostream & operator<<( std::ostream & o, const DialectGenericType & obj );
+CSP_CORE_EXPORT std::ostream & operator<<( std::ostream & o, const DialectGenericType & obj );
 
 }
 

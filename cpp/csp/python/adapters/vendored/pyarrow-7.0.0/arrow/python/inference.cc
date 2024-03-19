@@ -710,13 +710,10 @@ Result<std::shared_ptr<DataType>> InferArrowType(PyObject* obj, PyObject* mask,
   }
 }
 
-ARROW_PYTHON_EXPORT
 bool IsPyBool(PyObject* obj) { return internal::PyBoolScalar_Check(obj); }
 
-ARROW_PYTHON_EXPORT
 bool IsPyInt(PyObject* obj) { return internal::PyIntScalar_Check(obj); }
 
-ARROW_PYTHON_EXPORT
 bool IsPyFloat(PyObject* obj) { return internal::PyFloatScalar_Check(obj); }
 
 }  // namespace py
