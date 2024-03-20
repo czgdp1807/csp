@@ -104,6 +104,6 @@ target_include_directories(cspnpstatsimpl PRIVATE ${NUMPY_INCLUDE_DIRS})
 
 install(TARGETS csptypesimpl cspimpl cspbaselibimpl cspbasketlibimpl cspmathimpl cspstatsimpl cspnpstatsimpl
         PUBLIC_HEADER DESTINATION include/csp/python
-        RUNTIME DESTINATION bin/
+        RUNTIME DESTINATION lib/
         LIBRARY DESTINATION lib/
        )
