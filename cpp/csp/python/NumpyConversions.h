@@ -140,18 +140,17 @@ inline PyObject * as_nparray( const csp::TimeSeriesProvider * ts, const TickBuff
     int32_t len = startIndex - endIndex + 1;
     if( len <= 0 || !ts -> valid() || ( !tickBuffer && endIndex != 0 ) )
         return empty_array( NPY_OBJECT );
-
+    
     if( !tickBuffer )
     {
         len = 1;
         startIndex = endIndex;
     }
 
-    if( tailPadding )
-        len += 1;
+    len = len + tailPadding;
 
     npy_intp dims[]{ ( npy_intp ) len };
-    auto array = PyPtr<PyArrayObject>::own( ( PyArrayObject * ) PyArray_SimpleNew( 1, dims, NPY_OBJECT ) );
+    auto array = PyPtr<PyArrayObject>::own( (PyArrayObject*) PyArray_SimpleNew( 1, dims, NPY_OBJECT) );
     PyObject ** data = ( PyObject ** ) PyArray_DATA( array.get() );
     for( int i = startIndex; i >= endIndex; --i )
         data[ startIndex - i ] = toPython( ts -> valueAtIndex<T>( i ), *ts -> type() );
@@ -168,8 +167,8 @@ inline PyObject * as_nparray( const csp::TimeSeriesProvider * ts, const TickBuff
 inline PyObject * adjustStartAndEndTime( PyObject * arrayObj, autogen::TimeIndexPolicy startPolicy,
                                          autogen::TimeIndexPolicy endPolicy, DateTime startDt, DateTime endDt )
 {
-    bool extrapolateStart = startPolicy == autogen::TimeIndexPolicy::EXTRAPOLATE;
-    bool extrapolateEnd = endPolicy == autogen::TimeIndexPolicy::EXTRAPOLATE;
+    bool extrapolateStart = startPolicy.enum_value() == autogen::TimeIndexPolicy::enum_::EXTRAPOLATE;
+    bool extrapolateEnd = endPolicy.enum_value() == autogen::TimeIndexPolicy::enum_::EXTRAPOLATE;
     if( !extrapolateStart && !extrapolateEnd )
         return arrayObj;
 
@@ -193,16 +192,17 @@ inline PyObject * createNumpyArray( ValueType valueType, const csp::TimeSeriesPr
                                     autogen::TimeIndexPolicy startPolicy, autogen::TimeIndexPolicy endPolicy,
                                     DateTime startDt, DateTime endDt )
 {
-    bool extrapolateEnd = endPolicy == autogen::TimeIndexPolicy::EXTRAPOLATE &&
-                          endIndex < ts -> numTicks() &&
-                          ts -> timeAtIndex( endIndex ) < endDt;
+    bool extrapolateEnd = (endPolicy.enum_value() == autogen::TimeIndexPolicy::enum_::EXTRAPOLATE &&
+                           endIndex < ts -> numTicks() &&
+                           ts -> timeAtIndex( endIndex ) < endDt);
 
     T lastValue = ( ts -> valid() ? ts -> lastValueTyped<T>() : T() );
     DateTime lastTime = ( ts -> valid() ? ts -> lastTime() : DateTime() );
     switch( valueType )
     {
-        case ValueType::VALUE:
+        case ValueType::VALUE: {
             return as_nparray( ts, ts -> dataline<T>(), lastValue, startIndex, endIndex, extrapolateEnd );
+        }
 
         case ValueType::TIMESTAMP:
         {
