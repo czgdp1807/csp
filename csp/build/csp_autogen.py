@@ -408,15 +408,15 @@ bool {struct_name}::static_init()
     if( Py_IsInitialized() )
     {{
         // initialize StructMeta from python type if we're in python
-        PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
-        assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
+        // PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
+        // assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
 
-        PyObject * structType = PyObject_GetAttrString(pymodule, "{struct_name}" );
-        assert_or_die( structType != nullptr, "failed to find struct type {struct_name} in module {self._module_name}" );
+        // PyObject * structType = PyObject_GetAttrString(pymodule, "{struct_name}" );
+        // assert_or_die( structType != nullptr, "failed to find struct type {struct_name} in module {self._module_name}" );
 
         // should add some assertion here..
-        csp::python::PyStructMeta * pymeta = ( csp::python::PyStructMeta * ) structType;
-        s_meta = pymeta -> structMeta;
+        // csp::python::PyStructMeta * pymeta = ( csp::python::PyStructMeta * ) structType;
+        // s_meta = pymeta -> structMeta;
     }}
 
     return true;
@@ -444,15 +444,15 @@ bool {enum_name}::static_init()
     if( Py_IsInitialized() )
     {{
         // initialize EnumMeta from python type if we're in python
-        PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
-        assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
+        // PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
+        // assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
 
-        PyObject * enumType = PyObject_GetAttrString(pymodule, "{enum_name}" );
-        assert_or_die( enumType != nullptr, "failed to find num type {enum_name} in module {self._module_name}" );
+        // PyObject * enumType = PyObject_GetAttrString(pymodule, "{enum_name}" );
+        // assert_or_die( enumType != nullptr, "failed to find num type {enum_name} in module {self._module_name}" );
 
         // should add some assertion here..
-        csp::python::PyCspEnumMeta * pymeta = ( csp::python::PyCspEnumMeta * ) enumType;
-        s_meta = pymeta -> enumMeta;
+        // csp::python::PyCspEnumMeta * pymeta = ( csp::python::PyCspEnumMeta * ) enumType;
+        // s_meta = pymeta -> enumMeta;
     }}
 
     return true;
