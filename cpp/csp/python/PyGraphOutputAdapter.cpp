@@ -19,16 +19,17 @@ PyObjectPtr PyGraphOutputAdapter::result()
 
 void PyGraphOutputAdapter::processResults()
 {
-    /*
     auto * ts = input();
     auto len = tickCount() > 0 ? std::min( tickCount(), ts -> numTicks() ) : ts -> numTicks();
     //NOTE we may want to limit ticks to requested history as well... TBD?
 
     if( static_cast<PythonEngine *>( rootEngine() ) -> outputNumpy() )
     {
+        /*
         auto res = valuesAtIndexToNumpy( ValueType::TIMESTAMP_VALUE_TUPLE,
             ts, len - 1, 0, autogen::TimeIndexPolicy::INCLUSIVE, autogen::TimeIndexPolicy::INCLUSIVE );
         m_result = PyObjectPtr::check( res );
+        */
     }
     else
     {
@@ -47,7 +48,6 @@ void PyGraphOutputAdapter::processResults()
                            }
                        } );
     }
-    */
 }
 
 //csp.add_graph_output
