@@ -42,33 +42,33 @@ set(CSPIMPL_PUBLIC_HEADERS
 add_library(cspimpl SHARED
         cspimpl.cpp
         Conversions.cpp
-        NumpyConversions.cpp)
-        # PyAdapterManager.cpp
-        # PyAdapterManagerWrapper.cpp
-        # PyConstAdapter.cpp
-        # PyCppNode.cpp
-        # PyEngine.cpp
-        # PyGraphOutputAdapter.cpp
-        # PyInputAdapterWrapper.cpp
-        # PyBasketInputProxy.cpp
-        # PyBasketOutputProxy.cpp
-        # PyDynamicNode.cpp
-        # PyFeedbackAdapter.cpp
-        # PyInputProxy.cpp
-        # PyNode.cpp
-        # PyNodeWrapper.cpp
-        # PyNumbaNode.cpp
-        # PyNumpyAdapter.cpp
-        # PyOutputAdapter.cpp
-        # PyOutputAdapterWrapper.cpp
-        # PyOutputProxy.cpp
-        # PyPullInputAdapter.cpp
-        # PyPushInputAdapter.cpp
-        # PyPushPullInputAdapter.cpp
-        # PyManagedSimInputAdapter.cpp
-        # PyTimerAdapter.cpp
-        # PyConstants.cpp
-        # ${CSPIMPL_PUBLIC_HEADERS})
+        NumpyConversions.cpp
+        PyAdapterManager.cpp
+        PyAdapterManagerWrapper.cpp
+        PyConstAdapter.cpp
+        PyCppNode.cpp
+        PyEngine.cpp
+        PyGraphOutputAdapter.cpp
+        PyInputAdapterWrapper.cpp
+        PyBasketInputProxy.cpp
+        PyBasketOutputProxy.cpp
+        PyDynamicNode.cpp
+        PyFeedbackAdapter.cpp
+        PyInputProxy.cpp
+        PyNode.cpp
+        PyNodeWrapper.cpp
+        PyNumbaNode.cpp
+        PyNumpyAdapter.cpp
+        PyOutputAdapter.cpp
+        PyOutputAdapterWrapper.cpp
+        PyOutputProxy.cpp
+        PyPullInputAdapter.cpp
+        PyPushInputAdapter.cpp
+        PyPushPullInputAdapter.cpp
+        PyManagedSimInputAdapter.cpp
+        PyTimerAdapter.cpp
+        PyConstants.cpp
+        ${CSPIMPL_PUBLIC_HEADERS})
 
 set_target_properties(cspimpl PROPERTIES PUBLIC_HEADER "${CSPIMPL_PUBLIC_HEADERS}")
 target_compile_definitions(cspimpl PRIVATE CSP_IMPL_EXPORTS=1)
