@@ -19,6 +19,7 @@ PyObjectPtr PyGraphOutputAdapter::result()
 
 void PyGraphOutputAdapter::processResults()
 {
+    /*
     auto * ts = input();
     auto len = tickCount() > 0 ? std::min( tickCount(), ts -> numTicks() ) : ts -> numTicks();
     //NOTE we may want to limit ticks to requested history as well... TBD?
@@ -46,6 +47,7 @@ void PyGraphOutputAdapter::processResults()
                            }
                        } );
     }
+    */
 }
 
 //csp.add_graph_output

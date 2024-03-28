@@ -362,13 +362,15 @@ PyObject *PyInputProxy::valuesAt( ValueType valueType, PyObject *startIndexArg,
                 endIndex = startIndex + 1;
         }
 
-        if( startPolicy == autogen::TimeIndexPolicy::EXTRAPOLATE )
+        /*
+        if( startPolicy.enum_value() == autogen::TimeIndexPolicy::enum_::EXTRAPOLATE )
         {
             if( !startTd.isNone() )
                 return valuesAtIndexToNumpy( valueType, ts(), startIndex, endIndex, startPolicy, endPolicy, m_node -> now() + startTd, m_node -> now() + endTd );
             if( !startDt.isNone() )
                 return valuesAtIndexToNumpy( valueType, ts(), startIndex, endIndex, startPolicy, endPolicy, startDt, endDt );
         }
+        */
     }
 
     return valuesAtIndexToNumpy( valueType, ts(), startIndex, endIndex, startPolicy, endPolicy );

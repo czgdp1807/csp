@@ -178,14 +178,18 @@ public:
     }};
 
     // CspEnum types
+/*
 {cspenum_decls}
+*/
 
     const char * asCString() const                {{ return name().c_str(); }}
     const std::string & asString() const          {{ return name(); }}
 
+    /*
     static {enum_name} create( enum_ v )          {{ return s_meta -> create( ( int64_t ) v ); }}
     static {enum_name} create( const char * name) {{ return s_meta -> fromString( name ); }}
     static {enum_name} create( const std::string & s ) {{ return create( s.c_str() ); }}
+    */
 
     enum_ enum_value() const {{ return ( enum_ ) value(); }}
 
@@ -456,7 +460,9 @@ bool {enum_name}::static_init()
 
 bool static_init_{enum_name} = {enum_name}::static_init();
 std::shared_ptr<csp::CspEnumMeta> {enum_name}::s_meta;
+/*
 {static_decls}
+*/
 """
 
             enum_inits.append(enum_init)
