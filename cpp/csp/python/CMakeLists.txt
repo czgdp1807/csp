@@ -76,31 +76,31 @@ target_compile_definitions(cspimpl PRIVATE CSP_IMPL_EXPORTS=1)
 target_link_libraries(cspimpl csptypesimpl csp_core csp_engine)
 target_compile_definitions(cspimpl PUBLIC NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION)
 
-# ## Baselib c++ module
-# add_library(cspbaselibimpl SHARED cspbaselibimpl.cpp)
-# target_link_libraries(cspbaselibimpl cspimpl baselibimpl)
+## Baselib c++ module
+add_library(cspbaselibimpl SHARED cspbaselibimpl.cpp)
+target_link_libraries(cspbaselibimpl cspimpl baselibimpl)
 
-# # Include exprtk include directory for exprtk node
-# target_include_directories(cspbaselibimpl PRIVATE ${EXPRTK_INCLUDE_DIRS})
+# Include exprtk include directory for exprtk node
+target_include_directories(cspbaselibimpl PRIVATE ${EXPRTK_INCLUDE_DIRS})
 
-# ## Basketlib c++ module
-# add_library(cspbasketlibimpl SHARED cspbasketlibimpl.cpp)
-# target_link_libraries(cspbasketlibimpl cspimpl basketlibimpl)
+## Basketlib c++ module
+add_library(cspbasketlibimpl SHARED cspbasketlibimpl.cpp)
+target_link_libraries(cspbasketlibimpl cspimpl basketlibimpl)
 
-# ## Math c++ module
-# add_library(cspmathimpl SHARED cspmathimpl.cpp)
-# target_link_libraries(cspmathimpl cspimpl mathimpl)
+## Math c++ module
+add_library(cspmathimpl SHARED cspmathimpl.cpp)
+target_link_libraries(cspmathimpl cspimpl mathimpl)
 
-# ## Stats c++ module
-# add_library(cspstatsimpl SHARED cspstatsimpl.cpp)
-# target_link_libraries(cspstatsimpl cspimpl statsimpl)
+## Stats c++ module
+add_library(cspstatsimpl SHARED cspstatsimpl.cpp)
+target_link_libraries(cspstatsimpl cspimpl statsimpl)
 
-# ## NumPy stats c++ module
-# add_library(npstatsimpl STATIC npstatsimpl.cpp)
-# add_library(cspnpstatsimpl SHARED cspnpstatsimpl.cpp)
-# target_link_libraries(cspnpstatsimpl cspimpl npstatsimpl)
-# target_include_directories(npstatsimpl PRIVATE ${NUMPY_INCLUDE_DIRS})
-# target_include_directories(cspnpstatsimpl PRIVATE ${NUMPY_INCLUDE_DIRS})
+## NumPy stats c++ module
+add_library(npstatsimpl STATIC npstatsimpl.cpp)
+add_library(cspnpstatsimpl SHARED cspnpstatsimpl.cpp)
+target_link_libraries(cspnpstatsimpl cspimpl npstatsimpl)
+target_include_directories(npstatsimpl PRIVATE ${NUMPY_INCLUDE_DIRS})
+target_include_directories(cspnpstatsimpl PRIVATE ${NUMPY_INCLUDE_DIRS})
 
 install(TARGETS csptypesimpl cspimpl
         PUBLIC_HEADER DESTINATION include/csp/python
