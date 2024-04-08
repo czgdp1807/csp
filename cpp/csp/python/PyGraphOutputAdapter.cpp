@@ -25,11 +25,10 @@ void PyGraphOutputAdapter::processResults()
 
     if( static_cast<PythonEngine *>( rootEngine() ) -> outputNumpy() )
     {
-        /*
+        autogen::TimeIndexPolicy INCLUSIVE = autogen::TimeIndexPolicy::create(autogen::TimeIndexPolicy::enum_::INCLUSIVE);
         auto res = valuesAtIndexToNumpy( ValueType::TIMESTAMP_VALUE_TUPLE,
-            ts, len - 1, 0, autogen::TimeIndexPolicy::INCLUSIVE, autogen::TimeIndexPolicy::INCLUSIVE );
+            ts, len - 1, 0, INCLUSIVE, INCLUSIVE );
         m_result = PyObjectPtr::check( res );
-        */
     }
     else
     {
