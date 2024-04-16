@@ -442,15 +442,17 @@ bool {enum_name}::static_init()
     if( Py_IsInitialized() )
     {{
         // initialize EnumMeta from python type if we're in python
-        // PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
-        // assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
+        PyGILState_STATE state = PyGILState_Ensure();
+        PyObject * pymodule = PyImport_ImportModule( "{self._module_name}" );
+        assert_or_die( pymodule != nullptr, "failed to import struct module {self._module_name}" );
 
-        // PyObject * enumType = PyObject_GetAttrString(pymodule, "{enum_name}" );
-        // assert_or_die( enumType != nullptr, "failed to find num type {enum_name} in module {self._module_name}" );
+        PyObject * enumType = PyObject_GetAttrString(pymodule, "{enum_name}" );
+        assert_or_die( enumType != nullptr, "failed to find num type {enum_name} in module {self._module_name}" );
 
         // should add some assertion here..
-        // csp::python::PyCspEnumMeta * pymeta = ( csp::python::PyCspEnumMeta * ) enumType;
-        // s_meta = pymeta -> enumMeta;
+        csp::python::PyCspEnumMeta * pymeta = ( csp::python::PyCspEnumMeta * ) enumType;
+        s_meta = pymeta -> enumMeta;
+        PyGILState_Release(state);
     }}
 
     return true;
